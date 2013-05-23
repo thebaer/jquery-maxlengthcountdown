@@ -12,6 +12,10 @@
 		color: #999;
 		text-align: right;
 	}
+	div.sneaky > div.count-me-down {
+		display: inline;
+		margin-left: 0.5em;
+	}
 	</style>
 	
 </head>
@@ -19,15 +23,28 @@
 	
 	<h1>jQuery Maxlength Countdown Plugin Demo</h1>
 	
-	<input type="text" maxlength="24" />
+	<div class="show">
+		<input type="text" maxlength="24" />
+	</div>
+	
+	<div class="sneaky">
+		<input type="email" maxlength="255" />
+	</div>
 	
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="jquery.maxlengthCountdown.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$('input').maxlengthCountdown({
+		$('div.show > input').maxlengthCountdown({
+			countClass: 'count-me-down',
 			suffixText: 'characters left',
 			suffixTextSingular: 'character left'
+		});
+		$('div.sneaky > input').maxlengthCountdown({
+			countClass: 'count-me-down',
+			suffixText: 'left',
+			before: false,
+			visible: false
 		});
 	});
 	</script>
