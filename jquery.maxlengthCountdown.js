@@ -23,6 +23,7 @@
             suffixText: '',
             suffixTextSingular: '',
             before: true,
+            visible: true,
         };
         
         options = $.extend(defaults, options);
@@ -64,9 +65,18 @@
 
             // Only need a counter if input has maxlength
             if (maxlength !== undefined && maxlength > 0) {
+                if (options.visible) {
                     // Add counter, bind changing event
                     addCounter();
                     $input.on('keyup blur', countMe);
+                } else {
+                    $input.on('focus', function() {
+                        $(this).off('focus');
+                        // Add counter, bind changing event
+                        addCounter();
+                        $input.on('keyup blur', countMe);
+                    });
+                }
             }
         });
     };
