@@ -19,9 +19,10 @@
 (function($) {
     $.fn.maxlengthCountdown = function(options) {
         var defaults = {
-            counterBefore: true,
+            countClass: 'count-me-down',
             suffixText: '',
-            suffixTextSingular: ''
+            suffixTextSingular: '',
+            before: true,
         };
         
         options = $.extend(defaults, options);
@@ -33,28 +34,39 @@
 
         return this.filter('input').not('[type=checkbox], [type=radio]').each(function() {
 
-            var $input = $(this);
+            var $input = $(this),
+                $counter;
             var maxlength = $input.attr('maxlength');
-
-            // Only need a counter if input has maxlength
-            if (maxlength !== undefined && maxlength > 0) {
+            
+            var addCounter = function() {
                 // Create counter in given position
-                if (options.counterBefore) {
+                if (options.before) {
                     $input.before('<div />');
-                    var $counter = $input.prev('div');
+                    $counter = $input.prev('div');
                 } else {
                     $input.after('<div />');
-                    var $counter = $input.next('div');
+                    $counter = $input.next('div');
                 }
                 
                 // Populate counter
-                $counter.addClass('count-me-down').text(maxlength + ' ' + options.suffixText);
-                
-                // Bind changing event
-                $input.on('keyup blur', function() {
-                    var left = maxlength - $input.val().length;
-                    $counter.text( left + ' ' + (left === 1 ? options.suffixTextSingular : options.suffixText) );
-                });
+                $counter.addClass(options.countClass).text(maxlength + ' ' + options.suffixText);
+            };
+            
+            var removeCounter = function() {
+                // Remove counter in given position
+                $counter.remove();
+            };
+            
+            var countMe = function() {
+                var left = maxlength - $input.val().length;
+                $counter.text( left + ' ' + (left === 1 ? options.suffixTextSingular : options.suffixText) );
+            };
+
+            // Only need a counter if input has maxlength
+            if (maxlength !== undefined && maxlength > 0) {
+                    // Add counter, bind changing event
+                    addCounter();
+                    $input.on('keyup blur', countMe);
             }
         });
     };
