@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+	<title>jQuery Maxlength Countdown Plugin Demo</title>
+	
+	<style type="text/css">
+	input, div.count-me-down {
+		width: 250px;
+	}
+	div.count-me-down {
+		color: #999;
+		text-align: right;
+	}
+	</style>
+	
+</head>
+<body>
+	
+	<h1>jQuery Maxlength Countdown Plugin Demo</h1>
+	
+	<input type="text" maxlength="24" />
+	
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="jquery.maxlengthCountdown.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('input').maxlengthCountdown({
+			suffixText: 'characters left',
+			suffixTextSingular: 'character left'
+		});
+	});
+	</script>
+	
+</body>
+</html>
